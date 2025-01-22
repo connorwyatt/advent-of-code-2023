@@ -4,7 +4,7 @@ const print = std.debug.print;
 pub fn main() !void {
     const input = @embedFile("aoc-input/input.txt");
 
-    print("Result: {}\n", .{try sum_of_calibration_values(input)});
+    print("Day 01 part 1 result: {}\n", .{try sum_of_calibration_values(input)});
 }
 
 const SumOfCalibrationValuesError = error{
@@ -45,7 +45,15 @@ fn sum_of_calibration_values(input: []const u8) SumOfCalibrationValuesError!u16 
 test "works with example data" {
     const testing = std.testing;
 
-    const input = @embedFile("aoc-input/example-input.txt");
+    const input = @embedFile("aoc-input/example-input-1.txt");
 
     try testing.expectEqual(142, sum_of_calibration_values(input));
+}
+
+test "works with input data" {
+    const testing = std.testing;
+
+    const input = @embedFile("aoc-input/input.txt");
+
+    try testing.expectEqual(54697, sum_of_calibration_values(input));
 }
