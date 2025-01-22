@@ -11,7 +11,7 @@ const SumOfCalibrationValuesError = error{
     InvalidLine,
 };
 
-fn sum_of_calibration_values(input: []const u8) SumOfCalibrationValuesError!u17 {
+fn sum_of_calibration_values(input: []const u8) SumOfCalibrationValuesError!u16 {
     var lines = std.mem.tokenizeAny(u8, input, "\n");
     var result: u16 = 0;
 
