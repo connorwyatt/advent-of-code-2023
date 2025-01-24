@@ -3,12 +3,16 @@ const Build = std.Build;
 const CompileStep = std.Build.Step.Compile;
 
 pub fn build(b: *Build) void {
-    const target = b.standardTargetOptions(.{});
-    const mode = b.standardOptimizeOption(.{});
-
     const install_all_step = b.step("install_all", "Install all days");
     const run_all_step = b.step("run_all", "Run all days");
     const test_all_step = b.step("test_all", "Test all days");
+
+    addDays(b, install_all_step, run_all_step, test_all_step);
+}
+
+fn addDays(b: *Build, install_all_step: *Build.Step, run_all_step: *Build.Step, test_all_step: *Build.Step) void {
+    const target = b.standardTargetOptions(.{});
+    const mode = b.standardOptimizeOption(.{});
 
     var day_number: u8 = 1;
     while (day_number <= 25) : (day_number += 1) {
