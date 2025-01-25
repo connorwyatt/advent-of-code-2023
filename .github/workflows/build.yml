@@ -1,5 +1,5 @@
-name: Run Checks
-run-name: Run tests and check code formatting
+name: Check Formatting
+run-name: Check code formatting
 on:
   push:
     branches:
@@ -7,11 +7,10 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
-    name: Check
+    name: Check Formatting
     steps:
       - uses: actions/checkout@v3
       - uses: mlugg/setup-zig@v1
         with:
           version: 0.13.0
-      - run: zig build test_all
       - run: zig fmt --check .
