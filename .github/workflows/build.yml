@@ -1,5 +1,5 @@
 name: Run Checks
-run-name: Running all tests and checking code formatting.
+run-name: Run tests and check code formatting
 on:
   push:
     branches:
