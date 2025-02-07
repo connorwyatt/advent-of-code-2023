@@ -3,20 +3,31 @@ const Allocator = std.mem.Allocator;
 
 pub const Scratchcard = struct {
     allocator: Allocator,
+    card_number: u8,
     winning_numbers: []const u8,
     your_numbers: []const u8,
 
     const Self = @This();
 
     pub const ParseScratchcardError = error{
-        OutOfMemory,
         InvalidLine,
-    };
+    } || Allocator.Error;
 
-    pub fn parse(allocator: Allocator, input: []const u8) ParseScratchcardError!Self {
+    pub fn init(allocator: Allocator, input: []const u8) ParseScratchcardError!Self {
         var parts = std.mem.tokenizeAny(u8, input, ":|");
 
-        _ = parts.next() orelse return ParseScratchcardError.InvalidLine;
+        const card_number_part = parts.next() orelse
+            return ParseScratchcardError.InvalidLine;
+
+        var card_parts = std.mem.tokenizeAny(u8, card_number_part, " ");
+
+        _ = card_parts.next() orelse return ParseScratchcardError.InvalidLine;
+
+        const card_number_string = card_parts.next() orelse
+            return ParseScratchcardError.InvalidLine;
+        const card_number = std.fmt.parseInt(u8, card_number_string, 10) catch {
+            return ParseScratchcardError.InvalidLine;
+        };
 
         const winning_numbers_part = parts.next() orelse
             return ParseScratchcardError.InvalidLine;
@@ -31,6 +42,7 @@ pub const Scratchcard = struct {
 
         return .{
             .allocator = allocator,
+            .card_number = card_number,
             .winning_numbers = winning_numbers,
             .your_numbers = your_numbers,
         };

@@ -21,7 +21,7 @@ fn calculateScratchcardPoints(allocator: Allocator, input: []const u8) !u16 {
     var points: u16 = 0;
 
     while (lines.next()) |line| {
-        const scratchcard = try Scratchcard.parse(allocator, line);
+        const scratchcard = try Scratchcard.init(allocator, line);
         defer scratchcard.deinit();
 
         var matching_numbers: u16 = 0;
